@@ -1,0 +1,29 @@
+// routes/accounts.js
+const express = require('express');
+const router = express.Router();
+const Account = require('../models/account');
+
+// Get all accounts
+router.get('/', (req, res) => {
+    Account.find({}, (err, accounts) => {
+        if (err) {
+            res.status(500).send(err);
+        } else {
+            res.json(accounts);
+        }
+    });
+});
+
+// Add new account
+router.post('/', (req, res) => {
+    const newAccount = new Account(req.body);
+    newAccount.save((err, account) => {
+        if (err) {
+            res.status(500).send(err);
+        } else {
+            res.json(account);
+        }
+    });
+});
+
+module.exports = router;
